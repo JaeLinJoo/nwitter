@@ -12,16 +12,17 @@ const Nweet = ({ nweetObj, isOwner }) => {
     }
   };
   const toggleEditing = () => setEditing((prev) => !prev);
-  const onSubmit = async(event) => {
-      event.preventDefault();   
-      await dbService.doc(`nweets/${nweetObj.id}`).update({
-          text: newNweet,
-      })
-      setEditing(false);
-  }
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    await dbService.doc(`nweets/${nweetObj.id}`).update({
+      text: newNweet,
+    });
+    setEditing(false);
+  };
   const onChange = (event) => {
-      const {target:{value},
-    }=event;
+    const {
+      target: { value },
+    } = event;
     setNewNweet(value);
   };
   return (
@@ -34,7 +35,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
               placeholder="Edit your nweet"
               value={newNweet}
               required
-              onChange ={onChange}
+              onChange={onChange}
             />
             <input type="submit" value="Update Nweet" />
           </form>
@@ -43,6 +44,9 @@ const Nweet = ({ nweetObj, isOwner }) => {
       ) : (
         <>
           <h4>{nweetObj.text}</h4>
+          {nweetObj.attachmentUrl && (
+            <img src={nweetObj.attachmentUrl} width="50px" height="50px" />
+          )}
           {isOwner && (
             <>
               <button onClick={onDeleteClick}>Delete Nweet</button>
